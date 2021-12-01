@@ -26,6 +26,11 @@ function Search() {
                <StarIcon src="https://img.icons8.com/ios-filled/50/ffffff/star--v1.png"/>
                Saved Places
            </SavedPlaces>
+           <Link href="/confirm">
+            <ConfirmButtonContainer>
+                Confirm Locations
+            </ConfirmButtonContainer>
+           </Link>
           
        </Wrapper>
     )
@@ -33,6 +38,9 @@ function Search() {
 
 export default Search
 
+const ConfirmButtonContainer= tw.div`
+    bg-black text-white text-center mt-2 mx-4 px-4 py-3 text-2xl cursor-pointer
+`
 const Wrapper = tw.div`
     bg-gray-200 h-screen
 `
@@ -42,7 +50,7 @@ const ButtonContainer = tw.div`
 `
 
 const BackButton = tw.img`
-    h-12
+    h-12 cursor-pointer
 `
 
 const FromToIcons = tw.div`
