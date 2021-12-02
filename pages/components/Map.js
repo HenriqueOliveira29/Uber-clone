@@ -25,6 +25,15 @@ function Map(props) {
 
             addToMap(map, props.dropoffCoordinates);
          }
+
+         if(props.pickupCoordinates && props.dropoffCoordinates){
+             map.fitBounds([
+                 props.pickupCoordinates,
+                 props.dropoffCoordinates
+             ], {
+                 padding:60
+             })
+         }
         
         }, [props.pickupCoordinates, props.dropoffCoordinates]);
 
@@ -43,5 +52,5 @@ function Map(props) {
 export default Map
 
 const Wrapper = tw.div`
-    flex-1
+    flex-1 h-1/2
 `

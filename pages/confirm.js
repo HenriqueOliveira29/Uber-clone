@@ -1,14 +1,20 @@
 import React, {useEffect, useState} from 'react'
 import Map from "./components/Map"
 import tw from "tailwind-styled-components";
+import {useRouter} from 'next/router'
+import RideSelector from './components/RideSelector';
 
 function Confirm() {
     
     const [pickupCoordinates, setPickupCoordinates] = useState()
     const [dropoffCoordinates, setDropoffCoordinates] = useState()
 
-    const getPickupCoordinates = () => {
-        const pickup = "Santa Monica";
+    const router = useRouter()
+    const {pickup, dropoff} = router.query
+
+    
+
+    const getPickupCoordinates = (pickup) => {
         fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${pickup}.json?` + 
          new URLSearchParams({
              access_token: "pk.eyJ1IjoiaGVucmlxdWUyOSIsImEiOiJja3dtYTVrMGQxMHljMnBtdDFoOGRvYXFtIn0.WCpdplnIK7e153fMNqO5mQ",
@@ -21,8 +27,7 @@ function Confirm() {
         })
     }
 
-    const getDropoffCoordinates = () => {
-        const dropoff = "Los Angelas";
+    const getDropoffCoordinates = (dropoff) => {
         fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${dropoff}.json?` + 
          new URLSearchParams({
              access_token: "pk.eyJ1IjoiaGVucmlxdWUyOSIsImEiOiJja3dtYTVrMGQxMHljMnBtdDFoOGRvYXFtIn0.WCpdplnIK7e153fMNqO5mQ",
@@ -37,9 +42,9 @@ function Confirm() {
     }
 
     useEffect(()=>{
-        getPickupCoordinates();
-        getDropoffCoordinates();
-    },[])
+        getPickupCoordinates(pickup);
+        getDropoffCoordinates(dropoff);
+    },[pickup, dropoff])
 
     
 
@@ -50,8 +55,13 @@ function Confirm() {
              dropoffCoordinates={dropoffCoordinates}
             />
             <RideContainer>
-                RideSelector
-                Confim Button
+                <RideSelector/>
+                <ConfirmButtonContainer>
+                    <ConfirmButton>
+                    Confirm UberX
+                    </ConfirmButton>
+                    
+                </ConfirmButtonContainer>
             </RideContainer>
        </Wrapper>
     )
@@ -59,8 +69,15 @@ function Confirm() {
 
 export default Confirm
 
+const ConfirmButton = tw.div`
+    bg-black text-white my-4 mx-4 py-4 text-center text-xl cursor-pointer
+`
+const ConfirmButtonContainer = tw.div`
+border-t-2
+`
+
 const RideContainer = tw.div`
-flex-1
+    flex-1 flex flex-col h-1/2 
 `
 
 const Wrapper = tw.div`
